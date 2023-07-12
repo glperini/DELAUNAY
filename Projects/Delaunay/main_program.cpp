@@ -15,15 +15,13 @@ int main()
 
     vector<Point> points = mesh.points;
 
-    //ordino i punti per x crescente e y crescente secondo l'algoritmo Mergesort O(nlogn)
-    MergeSorter toBeSortedX;
-    MergeSorter toBeSortedY;
-    int sx = 0;
-    int dx = points.size()-1;
+    //ordino i punti per x crescente e y crescente secondo l'algoritmo Heapsort O(nlogn)
+    HeapSorter toBeSortedX;
+    HeapSorter toBeSortedY;
     bool sortingByX = true;
-    vector<Point> sortedX = toBeSortedX.MergeSort(points, sx, dx, sortingByX);
+    vector<Point> sortedX = toBeSortedX.heapSort(points, sortingByX);
     sortingByX = !sortingByX;
-    vector<Point> sortedY = toBeSortedY.MergeSort(points, sx, dx, sortingByX);
+    vector<Point> sortedY = toBeSortedY.heapSort(points, sortingByX);
 
     //inizio l'algoritmo creando il primo triangolo
     vector<Triangle> triangles;
