@@ -62,6 +62,7 @@ struct TriangularMesh
     bool exportResult(const string& outputFilePath, vector<Segment>& segments);
     };
 
+/*
 struct MergeSorter
     {
         int sx = 0;
@@ -83,7 +84,19 @@ struct MergeSorter
 
         Point getOrder(Point& point1, Point& point2, bool& sortingByX);
     };
+*/
 
+struct HeapSorter
+    {
+    int n = 0;
+    int i = 0;
+    bool sortingByX = false;
+    vector<Point> v;
+
+    void heapify(vector<Point>& v, int n, int i, bool sortingByX);
+    vector<Point> heapSort(vector<Point>& v, bool sortingByX);
+    Point getOrder(Point& point1, Point& point2, bool& sortingByX);
+    };
 
 //DICHIARAZIONE CLASSE Triangle
 class Triangle
