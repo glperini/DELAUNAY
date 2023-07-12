@@ -8,18 +8,16 @@ using namespace testing;
 using namespace ProjectLibrary;
 
 ///TEST SORTING
-TEST(TestSorting, Test_MergeSort) {
-  MergeSorter sorter;
+TEST(TestSorting, Test_HeapSortByXAllDistinct) {
+  HeapSorter sorter;
 
   // vettore di punti non ordinato
   vector<Point> points = {Point(2.0, 4.0), Point(1.0, 3.0), Point(5.0, 2.0), Point(3.0, 1.0)};
 
   bool sortingByX = true;  // Ordino per X
 
-  // funzione MergeSort
-  int sx = 0;
-  int dx = points.size() - 1;
-  points = sorter.MergeSort(points, sx, dx, sortingByX);
+  // funzione HeapSort
+  points = sorter.heapSort(points, sortingByX);
 
   // Verifica che il vettore sia stato ordinato giusto
   vector<Point> expected = {Point(1.0, 3.0), Point(2.0, 4.0), Point(3.0, 1.0), Point(5.0, 2.0)};
@@ -28,8 +26,62 @@ TEST(TestSorting, Test_MergeSort) {
   }
 }
 
-TEST(TestSorting, Test_getOrder) {
-  MergeSorter sorter;  // Creo MergeSorter
+TEST(TestSorting, Test_HeapSortByYAllDistinct) {
+  HeapSorter sorter;
+
+  // vettore di punti non ordinato
+  vector<Point> points = {Point(2.0, 4.0), Point(1.0, 3.0), Point(5.0, 2.0), Point(3.0, 1.0)};
+
+  bool sortingByX = false;  // Ordino per Y
+
+  // funzione HeapSort
+  points = sorter.heapSort(points, sortingByX);
+
+  // Verifica che il vettore sia stato ordinato giusto
+  vector<Point> expected = {Point(3.0, 1.0), Point(5.0, 2.0), Point(1.0, 3.0), Point(2.0, 4.0)};
+  for (unsigned int i=0; i<points.size(); i++) {
+      EXPECT_EQ(areSamePoint(points[i], expected[i]), true);
+  }
+}
+
+TEST(TestSorting, Test_HeapSortByXSameX) {
+  HeapSorter sorter;
+
+  // vettore di punti non ordinato
+  vector<Point> points = {Point(2.0, 4.0), Point(1.0, 3.0), Point(2.0, 2.0), Point(3.0, 1.0)};
+
+  bool sortingByX = true;  // Ordino per X
+
+  // funzione HeapSort
+  points = sorter.heapSort(points, sortingByX);
+
+  // Verifica che il vettore sia stato ordinato giusto
+  vector<Point> expected = {Point(1.0, 3.0), Point(2.0, 2.0), Point(2.0, 4.0), Point(3.0, 1.0)};
+  for (unsigned int i=0; i<points.size(); i++) {
+      EXPECT_EQ(areSamePoint(points[i], expected[i]), true);
+  }
+}
+
+TEST(TestSorting, Test_HeapSortByYSameY) {
+  HeapSorter sorter;
+
+  // vettore di punti non ordinato
+  vector<Point> points = {Point(2.0, 4.0), Point(1.0, 3.0), Point(5.0, 3.0), Point(3.0, 1.0)};
+
+  bool sortingByX = false;  // Ordino per Y
+
+  // funzione HeapSort
+  points = sorter.heapSort(points, sortingByX);
+
+  // Verifica che il vettore sia stato ordinato giusto
+  vector<Point> expected = {Point(3.0, 1.0), Point(1.0, 3.0), Point(5.0, 3.0), Point(2.0, 4.0)};
+  for (unsigned int i=0; i<points.size(); i++) {
+      EXPECT_EQ(areSamePoint(points[i], expected[i]), true);
+  }
+}
+
+TEST(TestSorting, Test_getOrderByX) {
+  HeapSorter sorter;  // Creo HeapSorter
 
   // Creo due punti da confrontare
   Point point1 = Point(2.0, 4.0);
@@ -44,10 +96,25 @@ TEST(TestSorting, Test_getOrder) {
   EXPECT_EQ(areSamePoint(result, point1), true);
 }
 
+TEST(TestSorting, Test_getOrderByY) {
+  HeapSorter sorter;  // Creo HeapSorter
+
+  // Creo due punti da confrontare
+  Point point1 = Point(2.0, 4.0);
+  Point point2 = Point(3.0, 1.0);
+
+  bool sortingByX = false;  // Ordinamento per X
+
+  // Uso getOrder
+  Point result = sorter.getOrder(point1, point2, sortingByX);
+
+  // Verifico che il punto restituito sia uguale a point1, perchè point1.x <= point2.x
+  EXPECT_EQ(areSamePoint(result, point2), true);
+}
 
 //Altro test per getOrder nel caso in cui x uguali, controllo se va a ordinare sulle y
-TEST(TestSorting, Test_getOrder_SameX) {
-    MergeSorter sorter; // Creo MergeSorter
+TEST(TestSorting, Test_getOrderByX_SameX) {
+    HeapSorter sorter; // Creo HeapSorter
 
     // Definisco due punti con coordinate X uguali
     Point point1 = Point(2.0, 4.0);
@@ -59,6 +126,23 @@ TEST(TestSorting, Test_getOrder_SameX) {
     Point result = sorter.getOrder(point1, point2, sortingByX);
 
     // Verifica che il punto restituito sia quello corretto (point2.y < point1.y)
+    EXPECT_EQ(areSamePoint(result, point2), true);
+}
+
+//Altro test per getOrder nel caso in cui y uguali, controllo se va a ordinare sulle x
+TEST(TestSorting, Test_getOrderByY_SameY) {
+    HeapSorter sorter; // Creo HeapSorter
+
+    // Definisco due punti con coordinate X uguali
+    Point point1 = Point(2.0, 4.0);
+    Point point2 = Point(1.0, 4.0);
+
+    bool sortingByX = false; // Ordino per coordinata Y
+
+    // Uso getOrder
+    Point result = sorter.getOrder(point1, point2, sortingByX);
+
+    // Verifica che il punto restituito sia quello corretto (point2.x < point1.x)
     EXPECT_EQ(areSamePoint(result, point2), true);
 }
 
@@ -205,15 +289,13 @@ TEST(TestTriangle, TestFirstTriangleWith4DistinctPoints)
   // Aggiungo i 6 punti
   vector<Point> points = {Point(1.0, 3.0), Point(4.0, 4.0), Point(0.0, 5.0), Point(5.0, 6.0),  Point(6.0, 2.0),  Point(2.0, 1.0)};
 
-  // Ordino i punti per x crescente e y crescente secondo l'algoritmo Mergesort O(nlogn)
-  MergeSorter toBeSortedX;
-  MergeSorter toBeSortedY;
-  int sx = 0;
-  int dx = points.size()-1;
+  // Ordino i punti per x crescente e y crescente secondo l'algoritmo HeapSort O(nlogn)
+  HeapSorter toBeSortedX;
+  HeapSorter toBeSortedY;
   bool sortingByX = true;
-  vector<Point> sortedX = toBeSortedX.MergeSort(points, sx, dx, sortingByX);   //(vettore, sx, dx, sortingByX)
+  vector<Point> sortedX = toBeSortedX.heapSort(points, sortingByX);
   sortingByX = !sortingByX;
-  vector<Point> sortedY = toBeSortedY.MergeSort(points, sx, dx, sortingByX);
+  vector<Point> sortedY = toBeSortedY.heapSort(points, sortingByX);
 
 
   // Chiamo funzione firstTriangle
@@ -238,15 +320,13 @@ TEST(TestTriangle, TestFirstTriangleWith3DistinctPoints)
 
   // Aggiungo i 6 punti
   vector<Point> points = {Point(1.0, 1.0), Point(2.0, 5.0), Point(3.0, 2.0), Point(4.0, 3.0),  Point(6.0, 1.0),  Point(6.0, 4.0)};
-  // Ordino i punti per x crescente e y crescente secondo l'algoritmo Mergesort O(nlogn)
-  MergeSorter toBeSortedX;
-  MergeSorter toBeSortedY;
-  int sx = 0;
-  int dx = points.size()-1;
+  // Ordino i punti per x crescente e y crescente secondo l'algoritmo HeapSort O(nlogn)
+  HeapSorter toBeSortedX;
+  HeapSorter toBeSortedY;
   bool sortingByX = true;
-  vector<Point> sortedX = toBeSortedX.MergeSort(points, sx, dx, sortingByX);   //(vettore, sx, dx, sortingByX)
+  vector<Point> sortedX = toBeSortedX.heapSort(points, sortingByX);
   sortingByX = !sortingByX;
-  vector<Point> sortedY = toBeSortedY.MergeSort(points, sx, dx, sortingByX);
+  vector<Point> sortedY = toBeSortedY.heapSort(points, sortingByX);
 
 
   // Chiamo funzione firstTriangle
@@ -272,15 +352,13 @@ TEST(TestTriangle, TestFirstTriangleWith2DistinctPoints)
   // Aggiungo i 6 punti
   vector<Point> points = {Point(1, 1), Point(2, 5), Point(3, 2), Point(4, 3),  Point(6, 1),  Point(6, 5) };
 
-  // Ordino i punti per x crescente e y crescente secondo l'algoritmo Mergesort O(nlogn)
-  MergeSorter toBeSortedX;
-  MergeSorter toBeSortedY;
-  int sx = 0;
-  int dx = points.size()-1;
+  // Ordino i punti per x crescente e y crescente secondo l'algoritmo HeapSort O(nlogn)
+  HeapSorter toBeSortedX;
+  HeapSorter toBeSortedY;
   bool sortingByX = true;
-  vector<Point> sortedX = toBeSortedX.MergeSort(points, sx, dx, sortingByX);   //(vettore, sx, dx, sortingByX)
+  vector<Point> sortedX = toBeSortedX.heapSort(points, sortingByX);
   sortingByX = !sortingByX;
-  vector<Point> sortedY = toBeSortedY.MergeSort(points, sx, dx, sortingByX);
+  vector<Point> sortedY = toBeSortedY.heapSort(points, sortingByX);
 
 
   // Chiamo funzione firstTriangle
