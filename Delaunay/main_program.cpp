@@ -39,6 +39,10 @@ int main()
                            hullPoints,
                            hullTrianglesIndices);
 
+    //esporto il primo triangolo inserito
+    vector<Segment> segments = delaunay.drawSegments(triangles);
+    if (!mesh.exportResult("./0Iterazione.csv", segments))
+        return 1;
 
     //inserisco un nuovo punto nella triangolazione
     for (unsigned int p=0; p<sortedX.size(); p++) {
@@ -61,12 +65,20 @@ int main()
                                  hullPoints,
                                  hullTrianglesIndices);
         }
+
+        vector<Segment> segments = delaunay.drawSegments(triangles);
+        ostringstream nameFileStream;
+        nameFileStream << p+1 << "Iterazione.csv";
+        string nameFile = nameFileStream.str();
+        if (!mesh.exportResult(nameFile, segments))
+            return 1;
     }
 
+    /*
     vector<Segment> segments = delaunay.drawSegments(triangles);
 
     if (!mesh.exportResult("./Results.csv", segments))
-        return 1;
+        return 1;*/
 
     return 0;
 
