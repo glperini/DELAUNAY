@@ -13,12 +13,12 @@ void HeapSorter::heapify(vector<Point>& v, int n, int i, bool sortingByX)
     int leftChildIndex = 2*i + 1;
     int rightChildIndex = 2*i + 2;
 
-    if (leftChildIndex < n && getOrder(v[leftChildIndex], v[parentIndex], sortingByX).x == v[leftChildIndex].x
-                           && getOrder(v[leftChildIndex], v[parentIndex], sortingByX).y == v[leftChildIndex].y)
+    if (leftChildIndex < n && getOrder(v[leftChildIndex], v[parentIndex], sortingByX).x == v[parentIndex].x
+                           && getOrder(v[leftChildIndex], v[parentIndex], sortingByX).y == v[parentIndex].y)
         parentIndex = leftChildIndex;
 
-    if (rightChildIndex < n && getOrder(v[rightChildIndex], v[parentIndex], sortingByX).x == v[rightChildIndex].x
-                            && getOrder(v[rightChildIndex], v[parentIndex], sortingByX).y == v[rightChildIndex].y )
+    if (rightChildIndex < n && getOrder(v[rightChildIndex], v[parentIndex], sortingByX).x == v[parentIndex].x
+                            && getOrder(v[rightChildIndex], v[parentIndex], sortingByX).y == v[parentIndex].y )
         parentIndex = rightChildIndex;
 
     if (parentIndex!=i) {
@@ -30,8 +30,6 @@ void HeapSorter::heapify(vector<Point>& v, int n, int i, bool sortingByX)
 vector<Point> HeapSorter::heapSort(vector<Point>& v, bool sortingByX)
 {
     int n = v.size();
-    vector<Point> temporary;
-    temporary.reserve(n);
 
     //Enqueue
     for (int i=n/2-1; i>=0; i--)        //a partire dall'ultimo nodo padre del heap eseguo heapify fino in cima
@@ -40,15 +38,10 @@ vector<Point> HeapSorter::heapSort(vector<Point>& v, bool sortingByX)
     //Dequeue
     for (int i=n-1; i>0; i--) {
         swap(v[0], v[i]);
-
-        //la riga seguente serve per girare il vettore in modo che sia ordinato in ordine crescente e non decrescente
-        temporary.push_back(v[i]);
-
         heapify(v, i, 0, sortingByX);
     }
 
-    temporary.push_back(v[0]);
-    return v = temporary;
+    return v;
 }
 
 //Definisce ordinamento tra punti
