@@ -78,7 +78,7 @@ Vector2d Segment::lineCoefficients(Point& p1, Point& p2){
 
  ///DEF TriangularMesh
  //Importa i dati da file
- bool TriangularMesh::importPoints(TriangularMesh& mesh, const string& fileName){
+ bool TriangularMesh::importPoints(TriangularMesh& mesh, const string& fileName) {
      //Importo i dati: Id, x, y
      ifstream file;
      file.open(fileName);
@@ -135,6 +135,7 @@ Vector2d Segment::lineCoefficients(Point& p1, Point& p2){
    }
 
    int segmentsSize = segments.size();
+   file << "p1.x p1.y p2.x p2.y" << endl;
    for (int i=0; i<segmentsSize; i++) {
     file << to_string(segments[i].p1.x) << " " << to_string(segments[i].p1.y) << " " <<  to_string(segments[i].p2.x) << " " <<  to_string(segments[i].p2.y) << endl;
    }
