@@ -38,7 +38,6 @@ class Segment{
         Vector2d coefficients;
         Segment() = default;
         Segment(Point& p1, Point& p2, Vector2d& coefficients);
-        //Segment(Point& p1, Point& p2);
 
         // per test
         Segment(Point p1, Point p2);
