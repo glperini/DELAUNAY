@@ -26,9 +26,12 @@ struct HeapSorter
     bool sortingByX = false;
     vector<Point> v;
 
-    void heapify(vector<Point>& v, int n, int i, bool sortingByX);
     vector<Point> heapSort(vector<Point>& v, bool sortingByX);
     Point getOrder(Point& point1, Point& point2, bool& sortingByX);
+
+private:
+    void heapify(vector<Point>& v, int n, int i, bool sortingByX);
+
     };
 
 }
