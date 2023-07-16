@@ -34,9 +34,6 @@ class Delaunay
 
         Delaunay() = default;
 
-        vector<Triangle> getTriangulation();
-
-
         void firstTriangle(vector<Point>& sortedX,                       //per creare il primo triangolo
                            vector<Point>& sortedY,
                            vector<Triangle>& triangles,
@@ -53,7 +50,7 @@ class Delaunay
                                   vector<Triangle>& triangles,
                                   int& triangleIndex);
 
-        int findTriangleContainingPoint(Point& point,              //cerca il triangolo contenente un determinato punto
+        int findTriangleContainingPoint(Point& point,                   //cerca il triangolo contenente un determinato punto
                                         vector<Triangle>& triangles,
                                         int& triangleIndex);
 
@@ -73,10 +70,10 @@ class Delaunay
                                      vector<Triangle>& triangles,
                                      vector<int>& hullTrianglesIndices);
 
-        void flipTriangles(int& triangle1Index,   //svolge operazione di flip
+        void flipTriangles(int& triangle1Index,                 //svolge operazione di flip
                            int& triangle2Index,
-                           int& adjacentSide1,     //rispetto al triangolo 1, il triangolo 2 adiacente che sto considerando si trova su questo lato
-                           int& adjacentSide2,     //rispetto al triangolo 2, il triangolo 1 adiacente che sto considerando si trova su questo lato
+                           int& adjacentSide1,                  //rispetto al triangolo 1, il triangolo 2 adiacente che sto considerando si trova su questo lato
+                           int& adjacentSide2,                  //rispetto al triangolo 2, il triangolo 1 adiacente che sto considerando si trova su questo lato
                            vector<int>& hullTrianglesIndices,
                            vector<Triangle>& triangles);
 
