@@ -74,12 +74,6 @@ int main()
             return 1;
     }
 
-    /*
-    vector<Segment> segments = delaunay.drawSegments(triangles);
-
-    if (!mesh.exportResult("./Results.csv", segments))
-        return 1;*/
-
     return 0;
 
 }
