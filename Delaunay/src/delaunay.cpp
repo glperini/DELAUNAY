@@ -51,7 +51,6 @@ void Delaunay::firstTriangle(vector<Point>& sortedX, vector<Point>& sortedY, vec
     { vector<Triangle> tryTriangles;
 
         //costruisco i 4 triangoli candidati con i miei 4 punti:
-        Triangle t1 = Triangle(p1, p2, p3);
         tryTriangles.push_back(Triangle(p1, p2, p3));
         tryTriangles.push_back(Triangle(p1, p2, p4));
         tryTriangles.push_back(Triangle(p2, p3, p4));
@@ -90,9 +89,29 @@ void Delaunay::firstTriangle(vector<Point>& sortedX, vector<Point>& sortedY, vec
     }
 
     //tolgo da sortedX i 3 vertici del triangolo grande appena creato
-    sortedX.erase(sortedX.begin() + binarySearch(sortedX, bestTriangle.p1));
-    sortedX.erase(sortedX.begin() + binarySearch(sortedX, bestTriangle.p2));
-    sortedX.erase(sortedX.begin() + binarySearch(sortedX, bestTriangle.p3));
+    int p1_index = searchID(sortedX, bestTriangle.p1.id);
+    int p2_index = searchID(sortedX, bestTriangle.p2.id);
+    int p3_index = searchID(sortedX, bestTriangle.p3.id);
+
+    if (p1_index!=-1 && p2_index!=-1 && p3_index!=-1) {
+        sortedX.erase(sortedX.begin() + bestTriangle.p1.id);
+        if (p1_index<p2_index) {
+            sortedX.erase(sortedX.begin() + bestTriangle.p2.id - 1);
+            if (p2_index<p3_index)
+                sortedX.erase(sortedX.begin() + bestTriangle.p3.id - 2);
+            else
+                sortedX.erase(sortedX.begin() + bestTriangle.p3.id - 1);
+        }
+        else { //(p1_index>p2_index)
+            sortedX.erase(sortedX.begin() + bestTriangle.p2.id);
+            if (p1_index<p3_index)
+                sortedX.erase(sortedX.begin() + bestTriangle.p3.id - 1);
+            else //(p1_index>p3_index)
+                sortedX.erase(sortedX.begin() + bestTriangle.p3.id);
+        }
+    }
+    else
+        cerr << "Errore" << endl;
 
     //aggiungo questo triangolo ordinato in senso antiorario al vettore dei triangoli
     antiClockWiseOrder(bestTriangle);
@@ -265,11 +284,9 @@ int Delaunay::isPointInsideCircumcircle(Point& point, vector<Triangle>& triangle
     }
 
     verifyDelaunayCondition(t1, triangleIndex, triangles, hullTrianglesIndices);
-    //triangles[triangleIndex] = t1;
     verifyDelaunayCondition(t2, triangleIndex2, triangles, hullTrianglesIndices);
-    //triangles[triangleIndex2] = t2;
     verifyDelaunayCondition(t3, triangleIndex3, triangles, hullTrianglesIndices);
-    //triangles[triangleIndex3] = t3;
+
  }
 
 //Caso punto esterno triangolazione
@@ -332,8 +349,6 @@ int Delaunay::isPointInsideCircumcircle(Point& point, vector<Triangle>& triangle
             if (i<j) {
                 //creo un segmento con due punti della convexHull
                 Segment verifySegment = Segment(newSegments[i].p2, newSegments[j].p2);
-                //Vector2d verifyCoefficients = verifySegment.lineCoefficients(newSegments[i].p2, newSegments[j].p2);
-                //verifySegment.coefficients = verifyCoefficients;
 
                 bool existed = false;
                 for (unsigned int q=0; q<convexHull.size(); q++) {
