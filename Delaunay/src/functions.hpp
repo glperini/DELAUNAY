@@ -20,47 +20,16 @@ namespace LibraryFunctions
 
 //DICHIARAZIONE FUNZIONI AUSILIARIE
 ///DEF funzione
-inline int binarySearch(vector<Point> points, Point target){
-    int sx = 0;
-    int dx = points.size();
-    bool found = false;
-    int index = -1;
-    while ((sx<=dx) && (!found)){
-        int cx = (sx+dx)/2;
-        if (points[cx].x>target.x)
-            dx = cx - 1;
-        else if (points[cx].x<target.x)
-            sx = cx + 1;
-        else {
-            if (points[cx].y==target.y){
-                index = cx;
-                found = true;
-            }
-            else if (points[cx].y>target.y){
-                cx--;
-                while (!found){
-                    if (points[cx].y==target.y){
-                        index = cx;
-                        found = true;
-                    }
-                    cx--;
-                }
-            }
-            else {
-                cx++;
-                while (!found){
-                    if (points[cx].y==target.y){
-                        index = cx;
-                        found = true;
-                    }
-                    cx++;
-                }
-            }
-        }
+//Cerca in un vettore di punti il punto specifico abbinato a un particolare id
+inline int searchID(vector<Point> v, int targetID)
+{
+    int n = v.size();
+    for(int index=0; index<n; index++) {
+        if (v[index].id == targetID)
+            return index;
     }
-    return index;
+    return -1;
 }
-
 
 ///DEF funzione
 //Calcola la distanza fra due punti
