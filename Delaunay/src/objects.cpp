@@ -47,7 +47,7 @@ Segment::Segment(Point& p1, Point& p2,  Vector2d& coefficients):
 {}
 
 //Costruttore
-Segment::Segment(Point p1, Point p2):
+Segment::Segment(Point& p1, Point& p2):
    p1(p1),
    p2(p2)
 {}
