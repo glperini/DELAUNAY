@@ -1,5 +1,5 @@
-#ifndef __DELAUNAY_H
-#define __DELAUNAY_H
+#ifndef __OBJECTS_H
+#define __OBJECTS_H
 
 #include <iostream>
 #include <fstream>
@@ -8,79 +8,78 @@
 #include <cmath>
 #include <algorithm>
 
-#include "sorting.hpp"
-#include "functions.hpp"
-
-using namespace LibraryObjects;
-using namespace LibrarySorting;
-using namespace LibraryFunctions;
 
 using namespace std;
 using namespace Eigen;
 
-namespace LibraryDelaunay
+namespace LibraryObjects
 {
 
-//DICHIARAZIONE CLASSE Delayunay
-class Delaunay
+//DICHIARAZIONE CLASSE Point
+class Point{
+    public:
+        int id;
+        double x;
+        double y;
+
+        Point() = default;
+        Point(double& x, double& y);
+        Point(int& id, double& x, double& y);
+
+        //per test
+        Point(int id, double x, double y);
+        Point(double x, double y);
+};
+
+
+//DICHIARAZIONE CLASSE Segment
+class Segment{
+   public:
+        Point p1;
+        Point p2;
+        Vector2d coefficients;
+        Segment() = default;
+        Segment(Point& p1, Point& p2, Vector2d& coefficients);
+
+        // per test
+        Segment(Point& p1, Point& p2);
+
+        Vector2d lineCoefficients(Point& p1, Point& p2);
+};
+
+
+//DICHIARAZIONE CLASSE Triangle
+class Triangle
     {
     public:
-        vector<Point> points;           //vettore di punti
-        vector<Triangle> triangles;     //vettore che contiene i triangoli aggiunti alla triangolazione
-        vector<Segment> convexHull;     //guscio esterno
-        vector<Point> hullPoints;       //punti del guscio
-        vector<int> hullTrianglesIndices; //indici di triangoli del guscio
-        int triangleIndex = 0;          //indice di un triangolo che stiamo testando
+        Point p1;
+        Point p2;
+        Point p3;
 
-        Delaunay() = default;
+        vector<int> neighbors = {-1, -1, -1};   //contiene per ogni vicino l'indice del triangolo adiacente e il lato su cui fa adiacenza (lato, triangolo)
+                                                                   //in prima posizione -> identificativo del lato (lato 1 tra vertice 0-1, lato 2 tra vertice 1-2, lato 3 tra vertice 2-3)
+                                                                   //in seconda posizione -> INDICE del triangolo vicino
+                                                                   //di default non ho triangoli vicini per il triangolo grande, quindi avranno tutti e 3 indici pari a -1
+        Triangle() = default;
+        Triangle(Point& p1, Point& p2, Point& p3);
 
-        void firstTriangle(vector<Point>& sortedX,                       //per creare il primo triangolo
-                           vector<Point>& sortedY,
-                           vector<Triangle>& triangles,
-                           vector<Segment>& convexHull,
-                           vector<Point>& hullPoints,
-                           vector<int>& hullTrianglesIndices);
-
-        int isPointInsideCircumcircle(Point& point,                     //se punto è interno cerchio circoscritto al triangolo: restituisce indice triangolo se trovato, -1 altrimenti
-                                      vector<Triangle>& triangles,
-                                      int& triangleIndex);
+        double Area(Point& p1, Point& p2, Point& p3);
+    };
 
 
-        int isPointInsideTriangle(Point& point,                    //per verificare se il punto appena aggiunto si trova dentro o fuori alla triangolazione e agire di conseguenza
-                                  vector<Triangle>& triangles,
-                                  int& triangleIndex);
+//DICHIARAZIONE STRUTTURA TriangularMesh
+struct TriangularMesh
+    {
+    unsigned int NumberOfPoints = 0; ///< number of Cell0D
+    vector<Point> points = {}; ///< Cell0D coordinates AND < Cell0D id, (size 2 + size 1) x NumberCell0D (x,y)
+    const string fileName;
+    const string outputFilePath;
+    vector<Segment> segments;
 
-        int findTriangleContainingPoint(Point& point,                   //cerca il triangolo contenente un determinato punto
-                                        vector<Triangle>& triangles,
-                                        int& triangleIndex);
-
-        void inTriangle(Point& point,                                   //il nuovo punto inserito si trova all'interno della triangolazione
-                        vector<Triangle>& triangles,
-                        int& triangleIndex,
-                        vector<int>& hullTrianglesIndices);
-
-        void outTriangle(Point& outsidePoint,                           //il nuovo punto inserito si trova all'esterno della triangolazione
-                         vector<Triangle>& triangles,
-                         vector<Segment>& convexHull,
-                         vector<Point>& hullPoints,
-                         vector<int>& hullTrianglesIndices);
-
-        void verifyDelaunayCondition(Triangle& triangle,                //verifica l'ipotesi di Delaunay
-                                     int& triangleIndex,
-                                     vector<Triangle>& triangles,
-                                     vector<int>& hullTrianglesIndices);
-
-        void flipTriangles(int& triangle1Index,                 //svolge operazione di flip
-                           int& triangle2Index,
-                           int& adjacentSide1,                  //rispetto al triangolo 1, il triangolo 2 adiacente che sto considerando si trova su questo lato
-                           int& adjacentSide2,                  //rispetto al triangolo 2, il triangolo 1 adiacente che sto considerando si trova su questo lato
-                           vector<int>& hullTrianglesIndices,
-                           vector<Triangle>& triangles);
-
-        vector<Segment> drawSegments(vector<Triangle>& triangles);
-
+    bool importPoints(TriangularMesh& mesh, const string& fileName);
+    bool exportResult(const string& outputFilePath, vector<Segment>& segments);
     };
 
 }
 
-#endif // __DELAUNAY_H
+#endif // __OBJECTS_H
