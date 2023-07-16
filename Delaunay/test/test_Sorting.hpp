@@ -14,7 +14,7 @@ using namespace testing;
 
 
 ///TEST SORTING
-TEST(TestSorting, Test_HeapSortByXAllDistinct) {
+TEST(TestSorting, Test_heapSort_ByXAllDistinct) {
   HeapSorter sorter;
 
   // vettore di punti non ordinato
@@ -32,7 +32,7 @@ TEST(TestSorting, Test_HeapSortByXAllDistinct) {
   }
 }
 
-TEST(TestSorting, Test_HeapSortByYAllDistinct) {
+TEST(TestSorting, Test_heapSort_ByYAllDistinct) {
   HeapSorter sorter;
 
   // vettore di punti non ordinato
@@ -50,7 +50,7 @@ TEST(TestSorting, Test_HeapSortByYAllDistinct) {
   }
 }
 
-TEST(TestSorting, Test_HeapSortByXSameX) {
+TEST(TestSorting, Test_heapSort_ByXSameX) {
   HeapSorter sorter;
 
   // vettore di punti non ordinato
@@ -68,7 +68,7 @@ TEST(TestSorting, Test_HeapSortByXSameX) {
   }
 }
 
-TEST(TestSorting, Test_HeapSortByYSameY) {
+TEST(TestSorting, Test_heapSort_ByYSameY) {
   HeapSorter sorter;
 
   // vettore di punti non ordinato
@@ -86,7 +86,7 @@ TEST(TestSorting, Test_HeapSortByYSameY) {
   }
 }
 
-TEST(TestSorting, Test_getOrderByX) {
+TEST(TestSorting, Test_getOrder_ByX) {
   HeapSorter sorter;  // Creo HeapSorter
 
   // Creo due punti da confrontare
@@ -102,7 +102,7 @@ TEST(TestSorting, Test_getOrderByX) {
   EXPECT_EQ(areSamePoint(result, point1), true);
 }
 
-TEST(TestSorting, Test_getOrderByY) {
+TEST(TestSorting, Test_getOrder_ByY) {
   HeapSorter sorter;  // Creo HeapSorter
 
   // Creo due punti da confrontare
@@ -119,7 +119,7 @@ TEST(TestSorting, Test_getOrderByY) {
 }
 
 //Altro test per getOrder nel caso in cui x uguali, controllo se va a ordinare sulle y
-TEST(TestSorting, Test_getOrderByX_SameX) {
+TEST(TestSorting, Test_getOrder_ByXSameX) {
     HeapSorter sorter; // Creo HeapSorter
 
     // Definisco due punti con coordinate X uguali
@@ -136,7 +136,7 @@ TEST(TestSorting, Test_getOrderByX_SameX) {
 }
 
 //Altro test per getOrder nel caso in cui y uguali, controllo se va a ordinare sulle x
-TEST(TestSorting, Test_getOrderByY_SameY) {
+TEST(TestSorting, Test_getOrder_ByYSameY) {
     HeapSorter sorter; // Creo HeapSorter
 
     // Definisco due punti con coordinate X uguali
