@@ -158,7 +158,7 @@ TEST(TestDelaunay, Test_findTriangleContainingPoint_Out) {
 }
 
 //verifichiamo caso: adjacentSide1 = 1, adjacentSide2 = 2
-TEST(TestDelaunay, Test_flip3triangles) {
+TEST(TestDelaunay, Test_flipTriangles_Side12Neighbors) {
 
     Delaunay delaunay;
     Point p1 = Point(1.0, 2.0);
@@ -197,7 +197,7 @@ TEST(TestDelaunay, Test_flip3triangles) {
 }
 
 //verifichiamo altro caso: adjacentSide1 = 2, adjacentSide2 = 1
-TEST(TestDelaunay, Test_flip_triangles) {
+TEST(TestDelaunay, Test_flipTriangles_Side21Neighbors) {
 
     Delaunay delaunay;
     Point p1 = Point(1.0, 2.0);
@@ -234,8 +234,8 @@ TEST(TestDelaunay, Test_flip_triangles) {
     }
 }
 
-//verifichiamo l'aggiornamento di hulltriangleindices
-TEST(TestDelaunay, Test_flip_hull) {
+//verifichiamo l'aggiornamento di hullTriangleIndices
+TEST(TestDelaunay, Test_flipTriangles_hullTriangleIndices) {
 
     Delaunay delaunay;
     Point p1 = Point(1.0, 2.0);
@@ -339,7 +339,6 @@ TEST(TestDelaunay, Test_inTriangle) {
     vector<int> expectedNeighbors3 = {-1,0,1};
     vector<int> expectedNeighbors4 = {-1,4,0};
     vector<int> expectedNeighbors5 = {-1,1,3};
-
 
 
     for (int i=0; i<3; i++) {
