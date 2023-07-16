@@ -15,7 +15,7 @@ using namespace LibraryFunctions;
 using namespace testing;
 
 ///TEST POINT
-TEST(TestPoint, TestGetDistance)
+TEST(TestPoint, Test_getDistance)
 {
   Point p1 = Point(1.0, 1.0);
   Point p2 = Point(5.0, 4.0);
@@ -28,7 +28,7 @@ TEST(TestPoint, TestGetDistance)
 
 
 ///TEST SEGMENT
-TEST(TestSegment, Test_LineCoefficients_SameX) {
+TEST(TestSegment, Test_lineCoefficients_SameX) {
     Segment segment;
     Point p1 = Point(2.0, 3.0);
     Point p2 = Point(2.0, 4.0);
@@ -37,7 +37,7 @@ TEST(TestSegment, Test_LineCoefficients_SameX) {
     EXPECT_EQ(result[1], 2.0);           // Verifica se coefficients[1] è uguale a p1.x
 }
 
-TEST(TestSegment , Test_LineCoefficients) {
+TEST(TestSegment , Test_lineCoefficients) {
     Segment segment;
     Point p1 = Point(1.0, 2.0);
     Point p2 = Point(3.0, 4.0);
@@ -46,7 +46,7 @@ TEST(TestSegment , Test_LineCoefficients) {
     EXPECT_DOUBLE_EQ(result[1], 1.0);    // Verifica se coefficients[1] è uguale a 1.0
 }
 
-TEST(TestSegment, TestGetAngleWithParallelSegments)
+TEST(TestSegment, Test_getAngle_ParallelSegments)
 {
   Segment segment;
 
@@ -70,7 +70,7 @@ TEST(TestSegment, TestGetAngleWithParallelSegments)
   EXPECT_DOUBLE_EQ(angleDegree, expectedAngleDegree);
 }
 
-TEST(TestSegment, TestGetAngleWithPerpendicularSegments)
+TEST(TestSegment, Test_getAngle_PerpendicularSegments)
 {
   Segment segment;
 
@@ -94,7 +94,7 @@ TEST(TestSegment, TestGetAngleWithPerpendicularSegments)
   EXPECT_DOUBLE_EQ(angleDegree, expectedAngleDegree);
 }
 
-TEST(TestSegment, TestGetAngleWithRandomSegments)
+TEST(TestSegment, Test_getAngle_GenericSegments)
 {
   Segment segment;
 
@@ -144,7 +144,7 @@ TEST(TestTriangle, Test_antiClockWiseOrder)  {
 }
 
 //CASO 4 ESTREMI DISTINTI
-TEST(TestTriangle, TestFirstTriangleWith4DistinctPoints)
+TEST(TestTriangle, Test_firstTriangle_4DistinctPoints)
 {
   Delaunay delaunay;
 
@@ -176,7 +176,7 @@ TEST(TestTriangle, TestFirstTriangleWith4DistinctPoints)
 }
 
 //CASO 3 ESTREMI DISTINTI
-TEST(TestTriangle, TestFirstTriangleWith3DistinctPoints)
+TEST(TestTriangle, Test_firstTriangle_3DistinctPoints)
 {
   Delaunay delaunay;
 
@@ -207,7 +207,7 @@ TEST(TestTriangle, TestFirstTriangleWith3DistinctPoints)
 }
 
 //CASO 2 ESTREMI DISTINTI
-TEST(TestTriangle, TestFirstTriangleWith2DistinctPoints)
+TEST(TestTriangle, Test_firstTriangle_2DistinctPoints)
 {
   Delaunay delaunay;
 
