@@ -21,6 +21,7 @@ class Point{
         int id;
         double x;
         double y;
+
         Point() = default;
         Point(double& x, double& y);
         Point(int& id, double& x, double& y);
@@ -29,6 +30,7 @@ class Point{
         Point(int id, double x, double y);
         Point(double x, double y);
 };
+
 
 //DICHIARAZIONE CLASSE Segment
 class Segment{
@@ -40,9 +42,28 @@ class Segment{
         Segment(Point& p1, Point& p2, Vector2d& coefficients);
 
         // per test
-        Segment(Point p1, Point p2);
+        Segment(Point& p1, Point& p2);
 
         Vector2d lineCoefficients(Point& p1, Point& p2);
+};
+
+
+//DICHIARAZIONE CLASSE Triangle
+class Triangle
+    {
+    public:
+        Point p1;
+        Point p2;
+        Point p3;
+
+        vector<int> neighbors = {-1, -1, -1};   //contiene per ogni vicino l'indice del triangolo adiacente e il lato su cui fa adiacenza (lato, triangolo)
+                                                                   //in prima posizione -> identificativo del lato (lato 1 tra vertice 0-1, lato 2 tra vertice 1-2, lato 3 tra vertice 2-3)
+                                                                   //in seconda posizione -> INDICE del triangolo vicino
+                                                                   //di default non ho triangoli vicini per il triangolo grande, quindi avranno tutti e 3 indici pari a -1
+        Triangle() = default;
+        Triangle(Point& p1, Point& p2, Point& p3);
+
+        double Area(Point& p1, Point& p2, Point& p3);
     };
 
 
@@ -57,24 +78,6 @@ struct TriangularMesh
 
     bool importPoints(TriangularMesh& mesh, const string& fileName);
     bool exportResult(const string& outputFilePath, vector<Segment>& segments);
-    };
-
-//DICHIARAZIONE CLASSE Triangle
-class Triangle
-    {
-    public:
-        Point p1;
-        Point p2;
-        Point p3;
-
-        vector<int> neighbors ={-1, -1, -1};   //contiene per ogni vicino l'indice del triangolo adiacente e il lato su cui fa adiacenza (lato, triangolo)
-                                                                   //in prima posizione -> identificativo del lato (lato 1 tra vertice 0-1, lato 2 tra vertice 1-2, lato 3 tra vertice 2-3)
-                                                                   //in seconda posizione -> INDICE del triangolo vicino
-                                                                   //di default non ho triangoli vicini per il triangolo grande, quindi avranno tutti e 3 indici pari a -1
-        Triangle() = default;
-        Triangle(Point& p1, Point& p2, Point& p3);
-
-        double Area(Point& p1, Point& p2, Point& p3);
     };
 
 }
